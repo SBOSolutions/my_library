@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class LibraryBook(models.Model):
@@ -34,6 +34,20 @@ class LibraryBook(models.Model):
     # relational fields
     publisher_id = fields.Many2one('res.partner', string='Publisher', ondelete='set null') # it's optionnal =>  context={}, domain=[]
     category_id = fields.Many2one('library.book.category', string='Categorie')
+
+    # add an sql constrainst
+    # _sql_constraints = [
+    #     ('name_uniq', 'UNIQUE (name)',
+    #         'Book title must be unique.'),
+    #     ('positive_page', 'CHECK(pages>0)',
+    #         'No of pages must be positive')
+    # ]
+    # contraint on release date
+    # @api.constrains('date_release')
+    # def _check_release_date(self):
+    #     for record in self:
+    #         if record.date_release and record.date_release > fields.Date.today():
+    #             raise models.ValidationError('Release date must be in the past')
 
 
 # inherit class for publisher
