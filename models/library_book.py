@@ -27,3 +27,7 @@ class LibraryBook(models.Model):
             states={'lost': [('readonly', True)]},
             help='Total book page count', company_dependent=False)
     reader_rating = fields.Float(string='Reader Average rating', digits=(14, 4)) # Digits are optional
+    cost_price = fields.Float(string='Book Cost', digits='Book Price')
+    # let's add a currency fields
+    currency_id = fields.Many2one('res.currency', string='Currency')
+    retail_price = fields.Monetary(string='Retail Price', currency_field='currency_id')  # currency_field is optionnal
