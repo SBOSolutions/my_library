@@ -33,6 +33,7 @@
                         <field name="date_updated"/>
                         <field name="cover" widget="image" class="oe_avatar"/>
                         <field name="reader_rating"/>
+                        <field name="publisher_id"/>
                     </group>
                     <group>
                         <field name="description"/>

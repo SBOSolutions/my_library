@@ -31,3 +31,17 @@ class LibraryBook(models.Model):
     # let's add a currency fields
     currency_id = fields.Many2one('res.currency', string='Currency')
     retail_price = fields.Monetary(string='Retail Price', currency_field='currency_id')  # currency_field is optionnal
+    # relational fields
+    publisher_id = fields.Many2one('res.partner', string='Publisher', ondelete='set null') # it's optionnal =>  context={}, domain=[]
+
+
+# inherit class for publisher
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    published_book_ids = fields.One2many('library.book', 'publisher_id', string='Published Books')
+    authored_book_ids = fields.Many2many('library.book', string='Authored Books') # optionnal => relation='library_book_res_partner_rel' to shorten the relation fields
+
+
+
+    
