@@ -2,9 +2,22 @@
 from odoo import models, fields, api
 from datetime import timedelta
 
+
+#abstract class
+class BaseArchive(models.AbstractModel):
+    _name = 'base.archive'
+    active = fields.Boolean(default=True)
+    def do_archive(self):
+        for record in self:
+            record.active = not record.active
+
+    
+
+
 class LibraryBook(models.Model):
     _name = 'library.book'  # this is the most important attibut because it's the name of the database table in that case it will be: library_book
     _description = 'Library Book' # this attibute is used for description
+    _inherit = ['base.archive']
     _order = 'date_release desc, name' # this is a attibute for order by purpose
     _rec_name = 'short_name' # with this attibute you can specify an other field that name for the record representation (this is the name use by the Odoo GUI to represent the record and not the ID in the database table)
 
