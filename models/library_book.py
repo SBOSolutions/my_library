@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
-
+from datetime import timedelta
 
 class LibraryBook(models.Model):
     _name = 'library.book'  # this is the most important attibut because it's the name of the database table in that case it will be: library_book
@@ -48,6 +48,43 @@ class LibraryBook(models.Model):
     #     for record in self:
     #         if record.date_release and record.date_release > fields.Date.today():
     #             raise models.ValidationError('Release date must be in the past')
+
+    # conputed fields
+    age_days = fields.Float(string='Days Since Release', 
+                compute='_compute_age',
+                inverse='_inverse_age',
+                search='_search_age',
+                store=False,
+                compute_sudo=True)
+
+    @api.depends('date_release')
+    def _compute_age(self):
+        today = fields.Date.today()
+        for book in self:
+            if book.date_release:
+                delta = today - book.date_release
+                book.age_days = delta.days
+            else:
+                book.age_days = 0
+
+    def _inverse_age(self):
+        today = fields.Date.today()
+        for book in self.filtered('date_release'):
+            book.date_release = today - timedelta(days=book.age_days)
+    
+    def _search_age(self, operator, value):
+        today = fields.Date.today()
+        value_days = timedelta(days=value)
+        value_date = today - value_days
+        # convert the operator:
+        # book with age > value have a date < value_date
+        operator_map = {
+            '>': '<', '>=': '<=',
+            '<': '>', '<=': '>=',
+        }
+        new_op = operator_map.get(operator, operator)
+        return [('date_release', new_op, value_date)]
+
 
 
 # inherit class for publisher
