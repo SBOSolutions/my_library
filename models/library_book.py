@@ -121,5 +121,5 @@ class LibraryMember(models.Model):
     date_end = fields.Date(string='Termination Date')
     member_number = fields.Char()
     date_of_birth = fields.Date(string='Date of birth')
-
+#partner_id = fields.Many2one('res.partner',ondelete='cascade', delegate=True)   # shortcut for this delagation instead of _inhe....
     
