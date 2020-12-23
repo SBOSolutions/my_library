@@ -37,6 +37,7 @@
                         <field name="publisher_city"/>
                         <field name="category_id"/>
                         <field name="age_days"/>
+                        <field name="ref_doc_id"/>
                     </group>
                     <group>
                         <field name="description"/>
