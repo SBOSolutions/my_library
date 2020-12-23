@@ -111,7 +111,7 @@ class ResPartner(models.Model):
             r.count_books = len(r.authored_book_ids)
 
 
-# add an delegation inheritance
+# add a delegation inheritance
 class LibraryMember(models.Model):
     _name = 'library.member'
     _inherits = {'res.partner': 'partner_id'}
