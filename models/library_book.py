@@ -111,4 +111,15 @@ class ResPartner(models.Model):
             r.count_books = len(r.authored_book_ids)
 
 
+# add an delegation inheritance
+class LibraryMember(models.Model):
+    _name = 'library.member'
+    _inherits = {'res.partner': 'partner_id'}
+
+    partner_id = fields.Many2one('res.partner', ondelete='cascade')
+    date_start = fields.Date(string='TMember Since')
+    date_end = fields.Date(string='Termination Date')
+    member_number = fields.Char()
+    date_of_birth = fields.Date(string='Date of birth')
+
     
