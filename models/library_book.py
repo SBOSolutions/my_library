@@ -32,7 +32,8 @@ class LibraryBook(models.Model):
     currency_id = fields.Many2one('res.currency', string='Currency')
     retail_price = fields.Monetary(string='Retail Price', currency_field='currency_id')  # currency_field is optionnal
     # relational fields
-    publisher_id = fields.Many2one('res.partner', string='Publisher', ondelete='set null') # it's optionnal =>  context={}, domain=[]
+    publisher_id = fields.Many2one('res.partner', string='Publisher', ondelete='set null') # optionnal =>  context={}, domain=[]
+    publisher_city = fields.Char(string='Publisher City', related='publisher_id.city', readonly=True)
     category_id = fields.Many2one('library.book.category', string='Categorie')
 
     # add an sql constrainst
